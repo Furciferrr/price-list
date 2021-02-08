@@ -1,0 +1,106 @@
+.allWrapper {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.productWrapper {
+    max-width: 300px;
+    margin: 0 auto;
+    
+}
+
+.price {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.price span {
+    padding-top: 10px;
+    margin-right: 10px;
+    float: right;
+}
+
+.findInput {
+    max-width: 60%;
+}
+.findInput:hover {
+    border: solid #FDD501 1px;
+} 
+
+
+.button {
+    font-weight: 600;
+}
+
+.button:hover {
+    border: solid #FDD501 1px;
+    color: black
+}
+
+
+.headerWrapp {
+    display: flex;
+    max-width: 480px;
+    margin: 0 auto;
+    justify-content: space-between;
+    padding-right: 15px;
+    padding-left: 20px;
+    
+}
+
+.priceWrapp {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.priceItem {
+    margin-left: 15px;
+}
+
+.startPage {
+    max-width: 400px;
+    margin: 0 auto;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.startPage img {
+    max-width: 90%;
+}
+
+.headWrapp {
+    background-color: #FDD501;
+    max-width: 500px;
+    min-height: 40px;
+    color: white;
+    font-weight: 1000;
+    margin: 0 auto;
+    
+
+}
+
+.headWrapp a {
+    color: white;
+}
+.headWrapp a:hover {
+    color: black;
+}
+
+
+.headerHighLine {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: 1000;
+
+    
+}
+
+
+.headWrapp > h4 {
+    color: white;
+    padding-top: 20px;
+    font-weight: 1000;
+}
+
