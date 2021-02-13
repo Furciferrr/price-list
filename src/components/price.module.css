@@ -1,5 +1,5 @@
 .allWrapper {
-    max-width: 600px;
+    max-width: 540px;
     margin: 0 auto;
 }
 
@@ -21,20 +21,41 @@
 }
 
 .findInput {
-    max-width: 60%;
+    max-width: 90%;
+    margin: 0 auto;
 }
-.findInput:hover {
-    border: solid #FDD501 1px;
-} 
+.findInput .findInputSpace {
+    width: 480px;
+}
 
+@media (max-width: 550px) {
+    .findInput .findInputSpace {width: 400px;}
+}
+@media (max-width: 440px) {
+    .findInput .findInputSpace {width: 350px;}
+}  
+@media (max-width: 380px) {
+    .findInput .findInputSpace {width: 330px;}
+}
 
+@media (max-width: 360px) {
+    .findInput .findInputSpace {width: 280px;}
+}
+
+.buttonWrapper {
+    margin: 5px;
+}
 .button {
     font-weight: 600;
+    width: 43%;
+
 }
 
 .button:hover {
-    border: solid #FDD501 1px;
-    color: black
+    color: black;
+    font-weight: 1000;
+    color: #FDD501
+    
 }
 
 
@@ -104,3 +125,16 @@
     font-weight: 1000;
 }
 
+.pages {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.pages span{
+    margin: 10px;
+    cursor: pointer;
+}
+
+.selected {
+    font-weight: bold;
+}

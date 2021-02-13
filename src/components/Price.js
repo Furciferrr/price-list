@@ -2,19 +2,22 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { itemData } from './../data/data'
 import classes from './price.module.css'
-import { Button } from 'antd';
-import { Input } from 'antd';
-import { Collapse } from 'antd';
-import logo from './../img/logo.jpg'
+import { Button, Space, Input } from 'antd';
+import SelectedProduct from './SelectedProduct';
+import AllProductPage from './AllProduct';
 
-
-const { Panel } = Collapse;
+const { Search } = Input;
 
 function Price() {
-  const [allDataProduct, setAllDataProduct] = useState(itemData)
   const [product, setProduct] = useState(null)
-  const [rate, setRate] = useState(0)
+  const [rate, setRate] = useState(2.6)
   const [inputValue, setValue] = useState('')
+  const [shown, setShown] = useState(true)
+  const [showUSD, setShowUSD] = useState(false)
+
+  const showAll = () => {
+    shown ? setShown(false) : setShown(true)
+  }
 
   const chengeInput = (e) => {
     setValue(e.currentTarget.value)
@@ -22,24 +25,39 @@ function Price() {
   }
 
   const clearValue = () => {
+    setShown(false)
     setProduct(null)
     setValue('')
   }
 
-  const findProduct = () => {
-    const reg = new RegExp(inputValue, "i")
-    const filt = allDataProduct.filter(item => {
-      return reg.exec(item.discription)
-    })
-    setProduct(filt)
+  const exchange = () => {
+    showUSD ? setShowUSD(false) : setShowUSD(true)
   }
+
+  const findProduct = () => {
+    if (inputValue === 'exchange') {
+      exchange()
+    } else
+      if (inputValue) {
+        setShown(false)
+        const reg = new RegExp(inputValue, "i")
+        const filt = itemData.filter(item => {
+          return reg.exec(item.discription)
+        })
+        setProduct(filt)
+      }
+
+  }
+
 
 
   useEffect(() => {
     axios.get('https://www.nbrb.by/API/ExRates/Rates/145').then(resolve => {
       setRate(resolve.data.Cur_OfficialRate)
+    }).catch(() => {
+      console.log('error')
     })
-  })
+  }, [])
 
   return (
     rate ?
@@ -51,42 +69,35 @@ function Price() {
           </div>
           <h4>Прайс Картриджи</h4>
         </div>
-
-     
-          <Input value={inputValue} placeholder='найди меня скорее...' onChange={chengeInput} onKeyPress={(e) => { e.key === 'Enter' && findProduct() }} className={classes.findInput} />
-          <Button onClick={() => {
-            findProduct()
-          }} className={classes.button} >Find</Button>
+        <div className={classes.findInput}>
+          <Space>
+            <Search value={inputValue} placeholder='найди меня скорее...' onChange={chengeInput} onSearch={findProduct} size={'middle'} className={classes.findInputSpace}/>
+          </Space>
+        </div>
+        <div className={classes.buttonWrapper}>
           <Button onClick={() => {
             clearValue()
           }} className={classes.button}>Clear</Button>
-   
+          <Button onClick={() => {
+            showAll()
+          }} className={classes.button}>{shown ? 'Hide all' : 'Show all'}</Button>
+          {/* <Button onClick={() => {
 
-        {!product ? <div></div> :
-          <div className={classes.headerWrapp}>
-            <div className={classes.model}>Model Cartridge</div>
-            <div className={classes.priceWrapp}>
-              <div className={classes.priceItem}>Retail</div>
-              <div className={classes.priceItem}>Opt</div>
-            </div>
+          }} className={classes.button}>{showUSD ? 'Exchange to BYN' : 'Exchange to USD'}</Button> */}
+        </div>
+
+
+        <div className={classes.headerWrapp}>
+          <div className={classes.model}>Model Cartridge</div>
+          <div className={classes.priceWrapp}>
+            <div className={classes.priceItem}>Retail</div>
+            <div className={classes.priceItem}>Opt</div>
           </div>
-        }
-        {!product ? <div className={classes.startPage}>
-          <img src={logo} />
-        </div> :
-          product.map(item => {
-            return (
-              <div className={classes.price}>
-                <Collapse>
-                  <span>{(item.priceUSD * rate).toFixed(2)}</span>
-                  <span>{(item.priceUSD * rate * 1.2).toFixed(2)}</span>
-                  <Panel header={item.model} key={item.id}>
-                    <p>{item.discription}</p>
-                  </Panel>
-                </Collapse>
-              </div>
-            )
-          })}
+        </div>
+
+
+        {shown ? <AllProductPage itemData={itemData} rate={rate} showUSD={showUSD} /> :
+          <SelectedProduct product={product} rate={rate} showUSD={showUSD} />}
 
         <div className={classes.headWrapp}>
           <div className={classes.headerHighLine}>
